@@ -48,11 +48,11 @@ int is_valid(Node* n){
 
   // aca revisaremos las filas
   for (i = 0 ; i < 9; i++) {
-    int seen[10] = {0};
+    int seen[10] = {0}; //  un arreglo para ver si ya vimos un numero
     for (j = 0 ; j < 9 ; j++){
       int val = n->sudo[i][j];
       if (val != 0) {
-        if (seen[val]) {
+        if (seen[val]) {  // esto si esta repetido
           return 0;
         }
         seen[val] = 1;
@@ -78,8 +78,8 @@ int is_valid(Node* n){
   for (k = 0 ; k < 3 ; k++){
     int seen[10] = {0};
     for (p = 0 ; p < 9 ; p++){
-      int i = 3 * (k/3) + (p/3);
-      int j = 3 * (k%3) + (p%3);
+      int i = 3 * (k/3) + (p/3); // aca vemos  la fila dentro del subcuadro
+      int j = 3 * (k%3) + (p%3);  // aca vemos la columna dentro del subcuadro
       int val = n->sudo[i][j];
       if (val != 0){
         if (seen[val]){
@@ -89,7 +89,7 @@ int is_valid(Node* n){
       }
     }
   }
-  return 1;
+  return 1;  // si paso todas las pruebas retornamos 1
 }
 
 
