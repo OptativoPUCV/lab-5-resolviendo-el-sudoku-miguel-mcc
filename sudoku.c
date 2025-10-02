@@ -42,7 +42,11 @@ void print_node(Node* n){
     }
     printf("\n");
 }
-
+/*
+aca verificamos si el estado del sudoku es valido en este caso que:
+no se repitan numeros en las filas, columnas y subcuadros 3x3
+para luego retornar 1 si es valido y 0 en caso contrario
+*/
 int is_valid(Node* n){
   int i, j , k, p;
 
@@ -92,10 +96,36 @@ int is_valid(Node* n){
   return 1;  // si paso todas las pruebas retornamos 1
 }
 
+/*
+aca generamos los nodos adyacentes y con esto:
+buscamos la primera celda vacia (0) y probamos con numeros del 1 al 9
+y luego se agregan los que sean validos
+*/
 
 List* get_adj_nodes(Node* n){
     List* list=createList();
-    return list;
+    int i, j, found=0;
+
+    // aca buscamos en la primera celda vacia
+    for (i = 0 ; i < 9 && !found; i++){
+      for (j = 0 ; j < 9 && !found ; j++){
+        if (n->sudo[i][j] == 0){        // aca encontramos una celda vacia
+          found = 1;
+          
+          // aca probamos con numeros del 1 al 9
+          for (int val = 1 ; val <= 9 ; val++){
+            Node* new = copy(n);
+            new->sudo[i][j] = val;
+            if (is_valid(new)){   // aca si es valido entonces lo agregamos a la lista 
+              pushBack(list, new);
+            } else {
+                free(new);  // y si no es valido liberamos la memoria
+            }
+          }
+        }
+      }
+    }
+    return list;  // aca retornamos la lista de nodos adyacentes
 }
 
 
