@@ -44,7 +44,50 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
+  int i, j , k, p;
 
+  // aca revisaremos las filas
+  for (i = 0 ; i < 9; i++) {
+    int seen[10] = {0};
+    for (j = 0 ; j < 9 ; j++){
+      int val = n->sudo[i][j];
+      if (val != 0) {
+        if (seen[val]) {
+          return 0;
+        }
+        seen[val] = 1;
+      }
+    }
+  }
+
+  // aca revisaremos las columnas
+  for (j = 0 ; j < 9; j++) {
+    int seen[10] = {0};
+    for (i = 0 ; i < 9 ; i++){
+      int val = n->sudo[i][j];
+      if (val != 0){
+        if(seen[val]){
+          return 0;
+        }
+        seen[val] = 1;
+      }
+    }
+  }
+
+  // aca revisaremos los subcuadros 3x3
+  for (k = 0 ; k < 3 ; k++){
+    int seen[10] = {0};
+    for (p = 0 ; p < 9 ; p++){
+      int i = 3 * (k/3) + (p/3);
+      int j = 3 * (k%3) + (p%3);
+      int val = n->sudo[i][j];
+      if (val != 0){
+        if (seen[val]){
+          return 0;
+        }
+        seen[val] = 1;
+      }
+    }
     return 1;
 }
 
