@@ -145,6 +145,35 @@ int is_final(Node* n){
   return 1; // esta completo el sudoku
 }
 
+/*
+aca buscamos en profundidad la solucion del sudoku:
+usamos un stack para ir recorriendo los nodos
+retornamos el nodo solucion si lo encuentra, NULL en caso contrario
+y en caso contrario retornamos NULL
+cont guarda la cantidad de iteraciones que se hicieron
+*/
+
 Node* DFS(Node* initial, int* cont){
-  return NULL;
+  Stack* stack = createStack(); // creamos el stack
+  pushBack(stack, initial);
+
+  while (!is_empty(stack)){
+    Node* current = top(stack);
+    pop(stack);
+    (*cont)++;
+
+    if (is_final(current)){
+      return current;  // aca si encontramos la solucion la retornamos
+    }
+
+    List* adj = get_adj_nodes(current);
+    Node* adj_node = first(adj);
+    while (adj_node != NULL){
+      push(stack, adj_node); // aca agregamos los nodos adyacentes al stack
+      adj_node = next(adj);
+    }
+
+    free(current); // liberamos la memoria
+  }
+  return NULL; // aca por si no se encuentra solucion
 }
